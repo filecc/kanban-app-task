@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .buttonM {
+    @apply  min-w-[255px] py-3.5 px-10 rounded-[24px] text-white transition-colors duration-300 font-bold leading-headingM text-headingM
+  }
+  .buttonS {
+    @apply  min-w-[255px] py-3.5 px-10 rounded-[24px] text-white transition-colors duration-300 font-bold leading-headingS text-headingS
+  }
+  .button-primary{
+    @apply bg-purple
+  }
+  .button-primary:hover {
+    @apply bg-purple-hover
+  }
+  .button-secondary {
+    @apply bg-purple/10 text-purple dark:bg-white
+  }
+  .button-secondary:hover {
+    @apply bg-purple-hover
+  }
+  .button-danger{
+    @apply bg-red
+  }
+  .button-danger:hover{
+    @apply bg-red-hover
+  }
+}
