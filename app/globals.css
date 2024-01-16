@@ -4,21 +4,21 @@
 
 @layer components {
   .buttonM {
-    @apply  min-w-[255px] py-3.5 px-10 rounded-[24px] text-white transition-colors duration-300 font-bold leading-headingM text-headingM
+    @apply  py-3.5 px-6 rounded-[24px] text-white transition-colors duration-300 font-bold leading-headingM text-headingM
   }
   .buttonS {
-    @apply  min-w-[255px] py-3.5 px-10 rounded-[24px] text-white transition-colors duration-300 font-bold leading-headingS text-headingS
+    @apply  py-3 px-6 rounded-[24px] text-white transition-colors duration-300 font-bold leading-headingS text-headingS
   }
   .button-primary{
     @apply bg-purple
   }
-  .button-primary:hover {
+  .button-primary:hover, .button-primary:disabled {
     @apply bg-purple-hover
   }
   .button-secondary {
     @apply bg-purple/10 text-purple dark:bg-white
   }
-  .button-secondary:hover {
+  .button-secondary:hover, .button-secondary:disabled {
     @apply bg-purple-hover
   }
   .button-danger{
