@@ -5,6 +5,7 @@ import { classNames } from "./lib/functions";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import Main from "./components/Main";
+import { BoardProvider } from "./providers/BordProvider";
 
 const plus = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en" className="">
      
       <ThemeProvider>
+        <BoardProvider>
         <body className={classNames(plus.className)}>
           <Main>
             <div className="bg-light-grey dark:bg-very-dark-grey text-very-dark-grey dark:text-white min-h-dvh flex flex-col">
@@ -30,6 +32,7 @@ export default function RootLayout({
             </div>
           </Main>
         </body>
+        </BoardProvider>
       </ThemeProvider>
     </html>
   );

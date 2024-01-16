@@ -5,14 +5,17 @@ import addIcon from "../assets/icon-add-task-mobile.svg";
 import Image from "next/image";
 import { useState } from "react";
 import cross from "../assets/icon-cross.svg";
+import { useBoard } from "../providers/BordProvider";
 
 export default function AddBoard({ title, classes } : {title?: string, classes?: string}) {
   const [adding, setAdding] = useState(false);
   const [columnsName, setColumnsName] = useState(["Todo", "Doing", "Completed"]);
   const [boardName, setBoardName] = useState("");
+  const { setBoard } = useBoard();
   const addBoard = async () => {
+    const boardId = randomKey();
     const board = await db.boards.add({
-      id: randomKey(),
+      id: boardId,
       name: boardName.trim().length > 0 ? boardName : "New Board",
       columns: columnsName.map(column => {
         return {
@@ -22,10 +25,16 @@ export default function AddBoard({ title, classes } : {title?: string, classes?:
       })
     });
     setAdding(false);
+    setBoard(await getBoard(boardId) as Board)
+    localStorage.setItem("board", JSON.stringify(await getBoard(boardId)));
   };
 
+  const getBoard = async (id: string) => {
+    const board = await db.boards.where("id").equals(id).first();
+    return board;
+  }
+
   const removeColumn = (index: number) => {
-    console.log(index)
     const newColumns = [...columnsName];
     newColumns.splice(index, 1);
     setColumnsName(newColumns);

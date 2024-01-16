@@ -13,7 +13,7 @@ export default function Home() {
   <Navbar boards={data} />
   <section className="flex-grow grid place-items-center">
       <div className="text-center px-6 flex flex-col items-center gap-6">
-        {data && data.length > 0 ? <Column board={data[0]} /> : <AddBoard />}
+        {data && data.length > 0 ? <Column /> : <AddBoard />}
       </div>
     </section>
   </>
