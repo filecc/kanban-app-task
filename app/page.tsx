@@ -1,14 +1,22 @@
-'use client'
-import Image from 'next/image'
-import addIcon from './assets/icon-add-task-mobile.svg'
+"use client";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "./lib/db";
+import AddBoard from "./components/AddBoard";
+import Column from "./components/Column";
+import Navbar from "./components/Navbar";
+import Loader from "./components/Loader";
+
 export default function Home() {
-  return (
-    <section className="flex-grow grid place-items-center">
+  const data = useLiveQuery(() => db.boards.toArray());
+  if(!data) return <Loader />
+  return (<>
+  <Navbar boards={data} />
+  <section className="flex-grow grid place-items-center">
       <div className="text-center px-6 flex flex-col items-center gap-6">
-        <p className="text-headingL font-bold text-medium-grey text-center">This board is empty. Create a new column to get started.</p>
-      <button className="buttonM button-primary flex items-center gap-2"><Image src={addIcon} alt='add icon' aria-hidden="true" /> Add New Column</button> 
+        {data && data.length > 0 ? <Column board={data[0]} /> : <AddBoard />}
       </div>
-      
     </section>
-  )
+  </>
+    
+  );
 }

@@ -25,7 +25,7 @@ export default function RootLayout({
         <body className={classNames(plus.className)}>
           <Main>
             <div className="bg-light-grey dark:bg-very-dark-grey text-very-dark-grey dark:text-white min-h-dvh flex flex-col">
-              <Navbar />
+              
               {children}
             </div>
           </Main>

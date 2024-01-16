@@ -21,18 +21,21 @@ const config: Config = {
         "purple-hover": "#A8A4FF",
         "red": "#EA5555",
         "red-hover": "#FF989",
+        "overlay": "#979797"
       },
       fontSize: {
         headingXL: "24px",
         headeingL: "18px",
         headingM: "15px",
         headingS: "12px",
+        bodyL: "13px"
       },
       lineHeight: {
         headingXL: "30px",
         headeingL: "23px",
         headingM: "19px",
         headingS: "12px",
+        bodyL: "23px"
       },
     },
   },

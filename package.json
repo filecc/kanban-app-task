@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
+    "dexie": "^3.2.4",
+    "dexie-react-hooks": "^1.1.7",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"

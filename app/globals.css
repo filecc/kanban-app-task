@@ -27,4 +27,7 @@
   .button-danger:hover{
     @apply bg-red-hover
   }
+  .input {
+    @apply block border border-medium-grey/25 dark:bg-dark-grey rounded-md px-4 py-2.5 placeholder:text-bodyL placeholder:leading-bodyL
+  }
 }
