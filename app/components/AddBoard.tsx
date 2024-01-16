@@ -1,6 +1,6 @@
 "use client";
 import { db } from "../lib/db";
-import { randomKey } from "../lib/functions";
+import { classNames, randomKey } from "../lib/functions";
 import addIcon from "../assets/icon-add-task-mobile.svg";
 import Image from "next/image";
 import { useState } from "react";
@@ -49,7 +49,7 @@ export default function AddBoard({ title, classes } : {title?: string, classes?:
         onClick={() => setAdding(true)}
         className={classes ? classes : "buttonM button-primary flex items-center gap-2"}
       >
-        <Image src={addIcon} alt="add icon" aria-hidden="true" /> {title ? title : 'Add New Board'}
+        <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path className={classNames(classes?.includes('fill-purple') ? 'fill-purple w-6 h-6' : 'fill-white')} d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"/></svg> {title ? title : 'Add New Board'}
       </button>
       {adding && (
         <>
