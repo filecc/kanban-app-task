@@ -13,25 +13,26 @@ import AddTask from "./AddTask";
 import logoLight from "../assets/logo-light.svg";
 import logoDark from "../assets/logo-dark.svg";
 
-export default function Sidebar({ boards }: { boards: Board[] }) {
+export default function Sidebar({ boards, isOpen, setIsOpen }: { boards: Board[], isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
   const { darkMode, setDarkMode } = useTheme();
   const { board, setBoard } = useBoard();
-  const [isOpen, setIsOpen] = useState(true);
   const selectBoard = (selectedBoard: Board) => {
     setBoard(selectedBoard);
     localStorage.setItem("board", JSON.stringify(selectedBoard));
   };
 
   return (
+    <>
+   
     <header className="bg-white dark:bg-dark-grey">
       <nav className="px-6 py-4 flex items-center justify-between">
         <div className="flex items-center w-full">
-          <div className={classNames("flex items-center gap-3 min-w-[35%] max-w-[260px]")}>
+          <div className={classNames("flex items-center gap-3 w-[240px]")}>
             <Image src={logoDark} alt="logo mobile" className="dark:hidden" />
             <Image
               src={logoLight}
               alt="logo mobile"
-              className="hidden dark:block"
+              className="hidden dark:inline-block"
             />
           </div>
           <div className="flex items-center justify-between gap-2 flex-grow pl-2">
@@ -43,8 +44,8 @@ export default function Sidebar({ boards }: { boards: Board[] }) {
             </div>
         </div>
         </div>
-        <div className="fixed top-[68px] left-0 bottom-0 min-w-[35%] max-w-[260px] flex flex-col justify-start">
-          <div className=" bg-white dark:bg-dark-grey pb-4 pt-10 h-full flex flex-col justify-between min-w-[35%] max-w-[260px]">
+        {isOpen && <div className="fixed top-[68px] left-0 bottom-0 w-[260px] flex flex-col justify-start">
+          <div className=" bg-white dark:bg-dark-grey pb-4 pt-10 h-full flex flex-col justify-between w-[260px]">
             <div>
             <h2 className="uppercase text-[12px] font-bold text-medium-grey tracking-[2.4px] px-4">
               all boards ({boards.length})
@@ -96,7 +97,8 @@ export default function Sidebar({ boards }: { boards: Board[] }) {
               </span>
             </div>
             </div>
-            
+            <div>
+           
             <div className="mt-6 mx-4 grid place-items-center py-4 bg-light-grey dark:bg-very-dark-grey rounded-md">
               <div className="flex items-center gap-6">
                 <SunIcon className="w-7 h-7 text-medium-grey" />
@@ -119,9 +121,16 @@ export default function Sidebar({ boards }: { boards: Board[] }) {
                 <MoonIcon className="w-7 h-7 text-medium-grey" />
               </div>
             </div>
+            <button className="button w-full mt-2 text-start ml-6" onClick={() => setIsOpen(false)}>Hide Sidebar</button>
+            </div>
+           
           </div>
-        </div>
+        </div>}
       </nav>
     </header>
+    {!isOpen && <button onClick={() => setIsOpen(true)} className="fixed bottom-0 mb-4 py-3 bg-purple px-3 rounded-r-full">
+    <svg width="16" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M15.815 4.434A9.055 9.055 0 0 0 8 0 9.055 9.055 0 0 0 .185 4.434a1.333 1.333 0 0 0 0 1.354A9.055 9.055 0 0 0 8 10.222c3.33 0 6.25-1.777 7.815-4.434a1.333 1.333 0 0 0 0-1.354ZM8 8.89A3.776 3.776 0 0 1 4.222 5.11 3.776 3.776 0 0 1 8 1.333a3.776 3.776 0 0 1 3.778 3.778A3.776 3.776 0 0 1 8 8.89Zm2.889-3.778a2.889 2.889 0 1 1-5.438-1.36 1.19 1.19 0 1 0 1.19-1.189H6.64a2.889 2.889 0 0 1 4.25 2.549Z" fill="#FFF"/></svg>
+    </button>}
+    </>
   );
 }
