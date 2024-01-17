@@ -7,6 +7,9 @@ import { useState } from "react";
 import { classNames } from "../lib/functions";
 import AddBoard from "./AddBoard";
 import { useBoard } from "../providers/BordProvider";
+import { Switch } from '@headlessui/react'
+import { MoonIcon, SunIcon } from "@heroicons/react/16/solid";
+import AddTask from "./AddTask";
 
 export default function Navbar({ boards }: { boards: Board[] }) {
   const { darkMode, setDarkMode } = useTheme();
@@ -32,43 +35,40 @@ export default function Navbar({ boards }: { boards: Board[] }) {
               >
                 <p className=" text-headingL font-bold">{board.name} </p>
 
-                {isOpen 
-                ? <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg"><path stroke="#635FC7" strokeWidth="2" fill="none" d="M9 6 5 2 1 6"/></svg>
-                : <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    stroke="#635FC7"
-                    strokeWidth="2"
-                    fill="none"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>}
+                {isOpen ? (
+                  <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      stroke="#635FC7"
+                      strokeWidth="2"
+                      fill="none"
+                      d="M9 6 5 2 1 6"
+                    />
+                  </svg>
+                ) : (
+                  <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      stroke="#635FC7"
+                      strokeWidth="2"
+                      fill="none"
+                      d="m1 1 4 4 4-4"
+                    />
+                  </svg>
+                )}
               </button>
             )}
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            disabled={!board?.columns ? true : false}
-            className="buttonS button-primary"
-          >
-            <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
-              <path
-                className="fill-white"
-                d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
-              />
-            </svg>
-          </button>
+          <AddTask />
           <Image src={verticalEllipsis} alt="menu" />
         </div>
 
-        {/* <button onClick={() => setDarkMode(!darkMode)}>
-          toggle
-        </button> */}
+        {/*  */}
       </nav>
       {isOpen && (
         <>
           <div className="fixed top-[68px] right-0 bottom-0 w-full flex flex-col justify-start bg-black/40">
-            <div className="mt-4 bg-white mx-14 rounded-lg py-4">
+            <div className="mt-4 bg-white dark:bg-dark-grey mx-14 rounded-lg py-4">
               <h2 className="uppercase text-[12px] font-bold text-medium-grey tracking-[2.4px] px-4">
                 all boards ({boards.length})
               </h2>
@@ -76,7 +76,8 @@ export default function Navbar({ boards }: { boards: Board[] }) {
                 {boards.map((boardAvailable, index) => {
                   return (
                     <button
-                      onClick={() => {selectBoard(boardAvailable)
+                      onClick={() => {
+                        selectBoard(boardAvailable);
                       }}
                       className={classNames(
                         "mr-6 rounded-r-full py-3 text-start pl-4 text-headingM font-bold  flex items-center gap-4",
@@ -104,7 +105,7 @@ export default function Navbar({ boards }: { boards: Board[] }) {
                     </button>
                   );
                 })}
-                <span className="flex items-center gap-4 pl-4">
+                <span className="flex items-center gap-4 pl-4 mt-4">
                   <svg
                     width="16"
                     height="16"
@@ -120,6 +121,28 @@ export default function Navbar({ boards }: { boards: Board[] }) {
                     classes="mr-6 rounded-r-full py-3 text-start text-headingM font-bold text-purple flex items-center gap-1 fill-purple"
                   />
                 </span>
+              </div>
+              <div className="mt-6 mx-4 grid place-items-center py-4 bg-light-grey dark:bg-very-dark-grey rounded-md">
+                <div className="flex items-center gap-6">
+                <SunIcon className="w-7 h-7 text-medium-grey" />
+                <Switch
+                  checked={darkMode}
+                  onChange={() => setDarkMode(!darkMode)}
+                  className={classNames(
+                     "bg-purple",
+                    "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple focus:ring-offset-2"
+                  )}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={classNames(
+                      darkMode ? "translate-x-5" : "translate-x-0",
+                      "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                    )}
+                  />
+                </Switch>
+                <MoonIcon className="w-7 h-7 text-medium-grey" />
+                </div>
                 
               </div>
             </div>

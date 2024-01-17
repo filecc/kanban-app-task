@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 
+
 const config: Config = {
   darkMode: "class",
   content: [
@@ -28,17 +29,18 @@ const config: Config = {
         headeingL: "18px",
         headingM: "15px",
         headingS: "12px",
-        bodyL: "13px"
+        bodyL: "13px",
+        bodyM: "12px"
       },
       lineHeight: {
         headingXL: "30px",
         headeingL: "23px",
         headingM: "19px",
         headingS: "12px",
-        bodyL: "23px"
+        bodyL: "23px",
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };
 export default config;

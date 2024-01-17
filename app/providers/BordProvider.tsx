@@ -33,7 +33,6 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
         if(localBoard){
             setBoard(localBoard)
         }
-       
     }, [localBoard])
 
     return (
