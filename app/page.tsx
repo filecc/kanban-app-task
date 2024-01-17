@@ -5,13 +5,19 @@ import AddBoard from "./components/AddBoard";
 import Column from "./components/Column";
 import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
+import Sidebar from "./components/Sidebar";
 
 export default function Home() {
   const data = useLiveQuery(() => db.boards.toArray());
   if (!data) return <Loader />;
   return (
     <>
-      <Navbar boards={data} />
+      <div className="md:hidden">
+        <Navbar boards={data} />
+      </div>
+      <div className="hidden md:block">
+        <Sidebar boards={data} />
+      </div>
 
       {data && data.length > 0 ? (
         <Column />
