@@ -51,6 +51,7 @@ export default function AddTask() {
         })
     const bordUpdated = await db.boards.get(board.id)
     localStorage.setItem("board", JSON.stringify(bordUpdated))
+    setIsOpen(false)
     
   }
   return (
@@ -69,7 +70,7 @@ export default function AddTask() {
       </button>
       {isOpen && (
         <div className="fixed top-0 bottom-0 w-full right-0 bg-black/40 grid place-items-center px-6 overflow-y-scroll py-6">
-          <div className="bg-white w-full p-4 rounded-lg">
+          <div className="bg-white dark:bg-dark-grey w-full p-4 rounded-lg">
             <h2 className="text-headingL font-bold">Add New Task</h2>
             <div className="mt-4">
               <label htmlFor="title" className="label">
@@ -135,7 +136,7 @@ export default function AddTask() {
               </div>
               <button
                 onClick={() => setSubtasks([...subtasks, ""])}
-                className="buttonM button-secondary flex items-center gap-2 w-full justify-center mt-4"
+                className="buttonS button-secondary flex items-center gap-2 w-full justify-center mt-4"
               >
                 <svg
                   viewBox="0 0 12 12"
@@ -158,7 +159,7 @@ export default function AddTask() {
               <select
                 name="board"
                 id="board"
-                className="mt-2 block w-full rounded-md border-0 py-3 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-purple text-headingM font-medium"
+                className="mt-2 block w-full rounded-md border-0 py-3 pl-3 ring-1 dark:bg-dark-grey ring-inset ring-gray-300 focus:ring-2 focus:ring-purple text-headingS font-medium"
                 onChange={(e) => {
                     setColumnID(e.target.value);
                 }
