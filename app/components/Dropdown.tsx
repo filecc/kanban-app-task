@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { classNames } from "../lib/functions";
 import EditBoard from "./EditBoard";
+import DeleteBoard from "./DeleteBoard";
 
 export default function Dropdown() {
   return (
@@ -31,7 +32,7 @@ export default function Dropdown() {
         <Menu.Items className="absolute right-0 z-10 mt-4 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="flex flex-col gap-4 py-4 px-6 text-bodyL">
             <EditBoard classes="bg-none my-0 py-0" hideIcon={true} />
-            <p className="text-red">Delete board</p>
+            <DeleteBoard />
           </div>
         </Menu.Items>
       </Transition>

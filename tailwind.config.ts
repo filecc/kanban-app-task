@@ -20,13 +20,13 @@ const config: Config = {
         "light-grey": "#F4F7FD",
         "purple": "#635FC7",
         "purple-hover": "#A8A4FF",
-        "red": "#EA5555",
-        "red-hover": "#FF989",
+        "kred": "#EA5555",
+        "kredHover": "#FF9898",
         "overlay": "#979797"
       },
       fontSize: {
         headingXL: "24px",
-        headeingL: "18px",
+        headingL: "18px",
         headingM: "15px",
         headingS: "12px",
         bodyL: "13px",
@@ -34,7 +34,7 @@ const config: Config = {
       },
       lineHeight: {
         headingXL: "30px",
-        headeingL: "23px",
+        headingL: "23px",
         headingM: "19px",
         headingS: "12px",
         bodyL: "23px",

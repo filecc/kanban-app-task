@@ -23,7 +23,7 @@ export default function Home() {
       </div>
 
       {data && data.length > 0 ? (
-       <div className={classNames(isSidebarOpen ? 'flex pl-12' : '')}>
+       <div className={classNames(isSidebarOpen ? 'flex pl-20' : '')}>
         <div className={classNames("w-[260px] hidden md:block", isSidebarOpen ? '' : 'hidden')}></div>
          <Column />
        </div>

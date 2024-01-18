@@ -9,7 +9,7 @@ export default function Column(){
     
     return <section className="flex overflow-x-scroll min-h-dvh w-full md:pt-20 px-2" >
         {board.columns?.map((column) => {
-            return <div key={column.id} className="p-1 w-full m-2 min-w-[300px]">
+            return <div key={column.id} className="p-1 w-full m-2 max-w-[350px]">
             <h2 className="uppercase text-headingS text-medium-grey tracking-[2.4px] font-bold flex items-center gap-2"><span className={classNames("inline-block w-4 h-4 rounded-full", randomTailwind400BgColor[Math.floor(Math.random() * randomTailwind400BgColor.length)])}></span>{column.name} ({column.tasks?.length ?? 0})</h2>
             {column.tasks?.map((task) => {
                 return <div key={task.id} className="mt-6 bg-white dark:bg-dark-grey rounded-lg shadow-lg dark:shadow-dark-grey dark:shadow px-4 py-6">

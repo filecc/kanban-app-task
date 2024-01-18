@@ -19,13 +19,13 @@
     @apply bg-purple/10 text-purple dark:bg-white
   }
   .button-secondary:hover, .button-secondary:disabled {
-    @apply bg-purple-hover
+    @apply bg-purple-hover text-white
   }
   .button-danger{
-    @apply bg-red
+    @apply bg-kred
   }
   .button-danger:hover{
-    @apply bg-red-hover
+    @apply bg-kredHover
   }
   .input {
     @apply block border border-medium-grey/25 dark:bg-dark-grey rounded-md px-4 py-2.5 placeholder:text-bodyL placeholder:leading-bodyL
