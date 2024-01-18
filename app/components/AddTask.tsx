@@ -56,7 +56,7 @@ export default function AddTask({ title }: { title?: string }) {
   return (
     <div>
       <button
-        disabled={!board?.columns ? true : false}
+        disabled={(!board?.columns || board.columns.length === 0) ? true : false}
         className={classNames(
           "buttonS button-primary",
           title ? "flex items-center gap-2" : ""
@@ -72,8 +72,8 @@ export default function AddTask({ title }: { title?: string }) {
         {title}
       </button>
       {isOpen && (
-        <div className="fixed top-0 bottom-0 w-full right-0 bg-black/40 grid place-items-center px-6 overflow-y-scroll py-6">
-          <div className="bg-white dark:bg-dark-grey w-full p-4 rounded-lg">
+        <div className="fixed top-0 bottom-0 w-full right-0 bg-black/40 grid place-items-center px-6 overflow-y-scroll py-6 z-30">
+          <div className="bg-white dark:bg-dark-grey w-full p-4 rounded-lg md:max-w-[450px]">
             <h2 className="text-headingL font-bold">Add New Task</h2>
             <div className="mt-4">
               <label htmlFor="title" className="label">

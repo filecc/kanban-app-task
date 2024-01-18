@@ -10,6 +10,7 @@ import { useBoard } from "../providers/BordProvider";
 import { Switch } from '@headlessui/react'
 import { MoonIcon, SunIcon } from "@heroicons/react/16/solid";
 import AddTask from "./AddTask";
+import Dropdown from "./Dropdown";
 
 export default function Navbar({ boards }: { boards: Board[] }) {
   const { darkMode, setDarkMode } = useTheme();
@@ -60,10 +61,8 @@ export default function Navbar({ boards }: { boards: Board[] }) {
         </div>
         <div className="flex items-center gap-2">
           <AddTask />
-          <Image src={verticalEllipsis} alt="menu" />
+          <Dropdown />
         </div>
-
-        {/*  */}
       </nav>
       {isOpen && (
         <>

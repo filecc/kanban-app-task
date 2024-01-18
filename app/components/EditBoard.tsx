@@ -7,37 +7,44 @@ import { useState } from "react";
 import cross from "../assets/icon-cross.svg";
 import { useBoard } from "../providers/BordProvider";
 
-export default function AddBoard({
-  title,
+export default function EditBoard({
   classes,
+  hideIcon
 }: {
-  title?: string;
   classes?: string;
+  hideIcon?: boolean
 }) {
   const [adding, setAdding] = useState(false);
-  const [columnsName, setColumnsName] = useState([
-    "Todo",
-    "Doing",
-    "Completed",
-  ]);
-  const [boardName, setBoardName] = useState("");
-  const { setBoard } = useBoard();
-  const addBoard = async () => {
-    const boardId = randomKey();
-    const board = await db.boards.add({
-      id: boardId,
-      name: boardName.trim().length > 0 ? boardName : "New Board",
+  
+  
+  const { board, setBoard } = useBoard();
+  const [boardName, setBoardName] = useState(board.name);
+  const [columnsName, setColumnsName] = useState(board.columns?.map(column => column.name) ?? []);
+
+  const updateBoard = async () => {
+    const actualBoard = await db.boards.update(board, {
+      name: boardName,
       columns: columnsName.map((column) => {
-        return {
-          id: randomKey(),
-          name: column,
-        };
+        const previousColumn = board.columns?.find((col) => col.name === column);
+        if (previousColumn) {
+          return {
+            ...previousColumn,
+            name: column,
+          };
+        } else {
+            return {
+                id: randomKey(),
+                name: column,
+              }
+        }
+        
       }),
     });
+    const bordUpdated = await db.boards.get(board.id);
+    localStorage.setItem("board", JSON.stringify(bordUpdated));
+    setBoard(bordUpdated as Board);
     setAdding(false);
-    setBoard((await getBoard(boardId)) as Board);
-    localStorage.setItem("board", JSON.stringify(await getBoard(boardId)));
-  };
+  }
 
   const getBoard = async (id: string) => {
     const board = await db.boards.where("id").equals(id).first();
@@ -49,13 +56,9 @@ export default function AddBoard({
     newColumns.splice(index, 1);
     setColumnsName(newColumns);
   };
+
   return (
     <div className="z-10">
-      {!title && (
-        <p className="text-headingL font-bold text-medium-grey text-center mb-4">
-          You have no board. Create a new board to get started.
-        </p>
-      )}
       <button
         onClick={() => setAdding(true)}
         className={
@@ -64,7 +67,7 @@ export default function AddBoard({
             : "buttonM button-primary flex items-center gap-2 mx-auto"
         }
       >
-        <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+        {!hideIcon && <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
           <path
             className={classNames(
               classes?.includes("fill-purple")
@@ -73,8 +76,8 @@ export default function AddBoard({
             )}
             d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
           />
-        </svg>{" "}
-        {title ? title : "Add New Board"}
+        </svg>}
+        Edit Board
       </button>
       {adding && (
         <>
@@ -154,10 +157,10 @@ export default function AddBoard({
                 </button>
                 <button
                   disabled={boardName.trim().length === 0 ? true : false}
-                  onClick={addBoard}
+                  onClick={updateBoard}
                   className="buttonM button-primary flex items-center gap-2 w-full justify-center mt-6"
                 >
-                  Create New Board
+                  Edit Board
                 </button>
               </div>
             </div>
