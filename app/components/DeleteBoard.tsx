@@ -26,12 +26,12 @@ export default function DeleteBoard() {
       {isOpen && (
         <>
           <div className="fixed top-0 bottom-0 left-0 z-30 bg-black/40 grid place-items-center w-full">
-            <div className="bg-white rounded-lg p-6 max-w-[80%] md:max-w-[450px]">
+            <div className="bg-white dark:bg-dark-grey rounded-lg p-6 max-w-[80%] md:max-w-[450px]">
               <h3 className="text-kred text-headingL font-medium mb-4">
                 Delete this board?
               </h3>
               <p className="mb-3 text-bodyL text-medium-grey">
-                Are you sure you want to delete the ‘Platform Launch’ board?
+                Are you sure you want to delete the <span className="font-bold">&ldquo;{board.name}&ldquo;</span> board?
                 This action will remove all columns and tasks and cannot be
                 reversed.
               </p>
