@@ -56,9 +56,9 @@ export default function ViewTask({ task }: { task: Task }) {
       >
         <h3 className="text-headingM font-bold">{task.title}</h3>
         <p className="text-bodyM text-medium-grey mt-1">
-          {subtasks && subtasks.length > 0
-            ? `${subtasks.filter((subtask) => subtask.isCompleted).length} of ${
-                subtasks.length
+          {task.subtasks && task.subtasks.length > 0
+            ? `${task.subtasks.filter((subtask) => subtask.isCompleted).length} of ${
+                task.subtasks.length
               } subtasks`
             : "No subtasks"}
         </p>
@@ -82,7 +82,7 @@ export default function ViewTask({ task }: { task: Task }) {
                 Subtasks
                 {task.subtasks && task.subtasks.length > 0
                   ? `${
-                      subtasks.filter((subtask) => subtask.isCompleted).length
+                    task.subtasks.filter((subtask) => subtask.isCompleted).length
                     } of ${task.subtasks?.length} subtasks`
                   : ""}
               </p>
@@ -92,7 +92,7 @@ export default function ViewTask({ task }: { task: Task }) {
                 </p>
               )}
               <section className="flex flex-col gap-2 mt-3">
-                {subtasks.map((subtask, index) => {
+                {task.subtasks?.map((subtask, index) => {
                   return (
                     <div
                       className={classNames(

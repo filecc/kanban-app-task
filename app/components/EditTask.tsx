@@ -22,22 +22,15 @@ export default function EditTask({ task }: { task: Task }) {
   };
 
   const handleEditTask = async () => {
-   
     const addedTask = await db.tasks.update(task, {
       title: taskTitle,
       columnId: columnID,
       description: taskDescription,
       subtasks: subtasks
         .filter((subtask) => subtask.title.trim().length > 0)
-        .map((subtask) => {
-          return {
-            ...subtask,
-            title: subtask.title
-          };
-        }),
     })
 
-    const tasks = await db.tasks.where("boardId").equals(board.id).toArray()  
+   /*  const tasks = await db.tasks.where("boardId").equals(board.id).toArray()  
     const newBoard = {
      ...board,
       columns: board.columns?.map(column => {
@@ -52,7 +45,7 @@ export default function EditTask({ task }: { task: Task }) {
     localStorage.setItem("board", JSON.stringify(newBoard));
     setIsOpen(false);
     setSubtasks([]);
-    setTask(["", ""]);
+    setTask(["", ""]); */
   };
   return (
     <div>
