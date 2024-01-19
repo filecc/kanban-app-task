@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from "react";
 import { classNames } from "../lib/functions";
 import { useBoard } from "../providers/BordProvider";
 import { db } from "../lib/db";
-import EditTask from "./EditTask";
+import DropdownTask from "./DropdownTask";
 
 export default function ViewTask({ task }: { task: Task }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,7 +74,7 @@ export default function ViewTask({ task }: { task: Task }) {
           >
             <div className="flex justify-between items-center">
               <h2 className="text-headingL font-bold">{task.title}</h2>
-             <EditTask task={task} />
+             <DropdownTask task={task} />
             </div>
             <div className="mt-3">
               <p className="text-bodyL text-medium-grey">{task.description}</p>

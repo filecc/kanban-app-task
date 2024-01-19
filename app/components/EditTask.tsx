@@ -63,7 +63,7 @@ export default function EditTask({ task }: { task: Task }) {
         )}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <EllipsisVerticalIcon className="w-6 h-6 text-medium-grey dark:text-white" />
+        Edit Task
        
       </button>
       {isOpen && (
