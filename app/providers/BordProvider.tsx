@@ -24,8 +24,6 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
     const [board, setBoard] = useState<Board | any>(localBoard ? localBoard : (data ? data[0] : {}));
     const tasks = useLiveQuery(() => db.tasks.toArray())
 
-    console.log(tasks)
-    console.log(board)
 
     useEffect(() => {
         const localData = localStorage.getItem("board");

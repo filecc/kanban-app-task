@@ -25,7 +25,6 @@ export default function DeleteTask({ task }: { task: Task }) {
         localStorage.setItem("board", JSON.stringify(newBoard));
         setIsOpen(false);
     } catch (error) {
-        console.log(error)
     }
   };
   return (

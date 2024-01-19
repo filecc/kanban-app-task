@@ -95,7 +95,6 @@ export default function AddBoard({
                   value={boardName}
                   onChange={(e) => {
                     setBoardName(e.target.value);
-                    console.log(boardName)
                   }}
                 />
               </div>

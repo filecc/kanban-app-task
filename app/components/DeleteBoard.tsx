@@ -16,7 +16,6 @@ export default function DeleteBoard() {
         setIsOpen(false);
         setBoard({} as Board)
     } catch (error) {
-        console.log(error)
     }
   };
   return (
