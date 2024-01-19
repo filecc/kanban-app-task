@@ -5,52 +5,48 @@ import { ChangeEvent, useState } from "react";
 import { classNames } from "../lib/functions";
 import { useBoard } from "../providers/BordProvider";
 import { db } from "../lib/db";
+import EditTask from "./EditTask";
 
-export default function ViewTask({ task }: { task: Task}) {
+export default function ViewTask({ task }: { task: Task }) {
   const [isOpen, setIsOpen] = useState(false);
   const [subtasks, setSubtasks] = useState(task.subtasks ?? []);
   const { board, setBoard } = useBoard();
 
   const updateColumn = async (e: ChangeEvent<HTMLSelectElement>) => {
     await db.tasks.update(task, {
-        columnId: e.target.value
-    })
-    const tasks = await db.tasks.where("boardId").equals(board.id).toArray()  
+      columnId: e.target.value,
+    });
+    const tasks = await db.tasks.where("boardId").equals(board.id).toArray();
     const newBoard = {
       name: board.name,
       id: board.id,
-      columns: board.columns?.map(column => {
-          return {
-              ...column,
-              tasks: tasks.filter(task => task.columnId === column.id)
-          }
-      })
-  }
-  setBoard(newBoard)
-   /*  setIsOpen(false); */
+      columns: board.columns?.map((column) => {
+        return {
+          ...column,
+          tasks: tasks.filter((task) => task.columnId === column.id),
+        };
+      }),
+    };
     localStorage.setItem("board", JSON.stringify(newBoard));
+  };
 
-  }
-  
   const updateBoard = async () => {
     await db.tasks.update(task, {
-        subtasks: subtasks
-    })
-    const tasks = await db.tasks.where("boardId").equals(board.id).toArray()  
+      subtasks: subtasks,
+    });
+    const tasks = await db.tasks.where("boardId").equals(board.id).toArray();
     const newBoard = {
       name: board.name,
       id: board.id,
-      columns: board.columns?.map(column => {
-          return {
-              ...column,
-              tasks: tasks.filter(task => task.columnId === column.id)
-          }
-      })
-  }
-  setBoard(newBoard)
-   /*  setIsOpen(false); */
+      columns: board.columns?.map((column) => {
+        return {
+          ...column,
+          tasks: tasks.filter((task) => task.columnId === column.id),
+        };
+      }),
+    };
     localStorage.setItem("board", JSON.stringify(newBoard));
-  }
+  };
 
   return (
     <>
@@ -61,7 +57,9 @@ export default function ViewTask({ task }: { task: Task}) {
         <h3 className="text-headingM font-bold">{task.title}</h3>
         <p className="text-bodyM text-medium-grey mt-1">
           {subtasks && subtasks.length > 0
-            ? `${subtasks.filter(subtask => subtask.isCompleted).length} of ${subtasks.length} subtasks`
+            ? `${subtasks.filter((subtask) => subtask.isCompleted).length} of ${
+                subtasks.length
+              } subtasks`
             : "No subtasks"}
         </p>
       </button>
@@ -76,16 +74,16 @@ export default function ViewTask({ task }: { task: Task}) {
           >
             <div className="flex justify-between items-center">
               <h2 className="text-headingL font-bold">{task.title}</h2>
-              <EllipsisVerticalIcon className="w-6 h-6 text-medium-grey dark:text-white" />
+             <EditTask task={task} />
             </div>
             <div className="mt-3">
-              <p className="text-bodyL text-medium-grey">
-                {task.description}
-              </p>
+              <p className="text-bodyL text-medium-grey">{task.description}</p>
               <p className="text-bodyM text-medium-grey mt-4 text-bold">
-                Subtasks{" "}
+                Subtasks
                 {task.subtasks && task.subtasks.length > 0
-                  ? `${subtasks.filter(subtask => subtask.isCompleted).length} of ${task.subtasks?.length} subtasks`
+                  ? `${
+                      subtasks.filter((subtask) => subtask.isCompleted).length
+                    } of ${task.subtasks?.length} subtasks`
                   : ""}
               </p>
               {task.subtasks && task.subtasks.length == 0 && (
@@ -94,24 +92,37 @@ export default function ViewTask({ task }: { task: Task}) {
                 </p>
               )}
               <section className="flex flex-col gap-2 mt-3">
-              {subtasks.map((subtask, index) => {
-                return <div className={
-                    classNames("bg-light-grey dark:bg-very-dark-grey rounded px-2 py-4 flex items-center gap-3 text-bodyM font-bold",
-                    subtask.isCompleted ? 'text-black/50 dark:text-medium-grey line-through' : 'text-black dark:text-white')
-                } key={subtask.id}>
-                    <input onChange={() => {
-                        setSubtasks(subtasks.map((subtask, i) => {
-                            if (i === index) {
-                                subtask.isCompleted = !subtask.isCompleted
-                            }
-                            return subtask
-                        }
-                        ))
-                        updateBoard()
-                    }} checked={subtask.isCompleted} type="checkbox"  className="h-4 w-4 rounded-sm border-gray-300 text-purple focus:ring-purple" />
-                    <p>{subtask.title}</p>
-                </div>
-              })}
+                {subtasks.map((subtask, index) => {
+                  return (
+                    <div
+                      className={classNames(
+                        "bg-light-grey dark:bg-very-dark-grey rounded px-2 py-4 flex items-center gap-3 text-bodyM font-bold",
+                        subtask.isCompleted
+                          ? "text-black/50 dark:text-medium-grey line-through"
+                          : "text-black dark:text-white"
+                      )}
+                      key={subtask.id}
+                    >
+                      <input
+                        onChange={() => {
+                          setSubtasks(
+                            subtasks.map((subtask, i) => {
+                              if (i === index) {
+                                subtask.isCompleted = !subtask.isCompleted;
+                              }
+                              return subtask;
+                            })
+                          );
+                          updateBoard();
+                        }}
+                        checked={subtask.isCompleted}
+                        type="checkbox"
+                        className="h-4 w-4 rounded-sm border-gray-300 text-purple focus:ring-purple"
+                      />
+                      <p>{subtask.title}</p>
+                    </div>
+                  );
+                })}
               </section>
             </div>
             <div className="mt-3">
@@ -123,7 +134,9 @@ export default function ViewTask({ task }: { task: Task}) {
                 id="board"
                 defaultValue={task.columnId}
                 className="mt-2 block w-full rounded-md border-0 py-3 pl-3 ring-1 dark:bg-dark-grey ring-inset ring-gray-300 focus:ring-2 focus:ring-purple text-headingS font-medium"
-                onChange={(e) => {updateColumn(e)}}
+                onChange={(e) => {
+                  updateColumn(e);
+                }}
               >
                 {board.columns?.map((selectColumn) => {
                   return (
@@ -140,4 +153,3 @@ export default function ViewTask({ task }: { task: Task}) {
     </>
   );
 }
-
