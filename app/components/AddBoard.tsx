@@ -50,7 +50,7 @@ export default function AddBoard({
     setColumnsName(newColumns);
   };
   return (
-    <div className="z-10">
+    <div>
       {!title && (
         <p className="text-headingL font-bold text-medium-grey text-center mb-4">
           You have no board. Create a new board to get started.
@@ -95,6 +95,7 @@ export default function AddBoard({
                   value={boardName}
                   onChange={(e) => {
                     setBoardName(e.target.value);
+                    console.log(boardName)
                   }}
                 />
               </div>
