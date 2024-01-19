@@ -24,7 +24,7 @@ export default function AddTask({ title }: { title?: string }) {
    
     const addedTask = await db.tasks.add({
       id: randomKey(),
-      title: taskTitle,
+      title: taskTitle.trim().length > 0 ? taskTitle : "New Task",
       boardId: board.id,
       columnId: columnID,
       description: taskDescription,
@@ -169,12 +169,12 @@ export default function AddTask({ title }: { title?: string }) {
               <select
                 name="board"
                 id="board"
+                defaultValue={columnID}
                 className="mt-2 block w-full rounded-md border-0 py-3 pl-3 ring-1 dark:bg-dark-grey ring-inset ring-gray-300 focus:ring-2 focus:ring-purple text-headingS font-medium"
                 onChange={(e) => {
                   setColumnID(e.target.value);
                 }}
               >
-                <option value="">Select a column</option>
                 {board.columns?.map((column) => {
                   return (
                     <option key={column.id} value={column.id}>
