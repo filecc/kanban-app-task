@@ -9,13 +9,14 @@ import { useBoard } from "../providers/BordProvider";
 
 export default function EditBoard({
   classes,
-  hideIcon
+  hideIcon,
+  title
 }: {
   classes?: string;
-  hideIcon?: boolean
+  hideIcon?: boolean;
+  title?: string;
 }) {
   const [adding, setAdding] = useState(false);
-  
   
   const { board, setBoard } = useBoard();
   const [boardName, setBoardName] = useState(board.name);
@@ -53,7 +54,7 @@ export default function EditBoard({
   };
 
   return (
-    <div className="z-10">
+    <>
       <button
         onClick={() => setAdding(true)}
         className={
@@ -62,24 +63,29 @@ export default function EditBoard({
             : "buttonM button-primary flex items-center gap-2 mx-auto"
         }
       >
+        <span className="flex items-center gap-2">
         {!hideIcon && <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
           <path
             className={classNames(
               classes?.includes("fill-purple")
                 ? "fill-purple w-6 h-6"
-                : "fill-white"
+                : classes?.includes("headingXL")
+                ? "fill-medium-grey"
+                : "fill-white",
+                
             )}
             d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z"
           />
         </svg>}
-        Edit Board
+        {title ? title : 'Edit Board'}
+        </span>
+       
       </button>
       {adding && (
         <>
-          <div className="fixed top-0 right-0 bottom-0 w-full bg-dark-grey/50 dark:bg-very-dark-grey/70 grid place-items-center px-6 text-start">
-            <div className=" bg-white dark:bg-dark-grey w-full px-6 py-6 rounded-md md:max-w-[350px]">
-              <h2 className="text-headingL font-bold">Add New Board</h2>
-
+          <div onClick={() => setAdding(false)} className="fixed top-0 right-0 bottom-0 w-full bg-dark-grey/50 dark:bg-very-dark-grey/70 grid place-items-center px-6 text-start">
+            <div onClick={e => e.stopPropagation()} className=" bg-white dark:bg-dark-grey w-full px-6 py-6 rounded-md md:max-w-[350px]">
+              <h2 className="text-headingL font-bold">Edit Board</h2>
               <div className="mt-3">
                 <label htmlFor="name" className="label">
                   Board Name
@@ -162,6 +168,6 @@ export default function EditBoard({
           </div>
         </>
       )}
-    </div>
+    </>
   );
 }

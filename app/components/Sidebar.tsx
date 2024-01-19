@@ -51,7 +51,7 @@ export default function Sidebar({ boards, isOpen, setIsOpen }: { boards: Board[]
           <div className="flex items-center justify-between gap-2 flex-grow pl-2">
           <p className=" text-headingL font-bold">{board.name} </p>
     
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               <AddTask title="Add New Task" />
               <Dropdown />
             </div>

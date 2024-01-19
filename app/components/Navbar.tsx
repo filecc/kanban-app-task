@@ -72,7 +72,7 @@ export default function Navbar({ boards }: { boards: Board[] }) {
             )}
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-6">
           <AddTask />
           <Dropdown />
         </div>

@@ -29,7 +29,7 @@ export default function Dropdown() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-4 w-56 origin-top-right rounded-md bg-white dark:bg-very-dark-grey shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-50 mt-4 w-56 origin-top-right rounded-md bg-white dark:bg-very-dark-grey shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="flex flex-col gap-4 py-4 px-6 text-bodyL">
             <EditBoard classes="bg-none my-0 py-0 text-medium-grey" hideIcon={true} />
             <DeleteBoard />
