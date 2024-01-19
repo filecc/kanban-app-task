@@ -29,23 +29,7 @@ export default function EditTask({ task }: { task: Task }) {
       subtasks: subtasks
         .filter((subtask) => subtask.title.trim().length > 0)
     })
-
-   /*  const tasks = await db.tasks.where("boardId").equals(board.id).toArray()  
-    const newBoard = {
-     ...board,
-      columns: board.columns?.map(column => {
-          return {
-              ...column,
-              tasks: tasks.filter(task => task.columnId === column.id)
-          }
-      })
-  }
-  setBoard(newBoard)
-    
-    localStorage.setItem("board", JSON.stringify(newBoard));
     setIsOpen(false);
-    setSubtasks([]);
-    setTask(["", ""]); */
   };
   return (
     <div>
