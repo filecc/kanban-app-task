@@ -66,8 +66,8 @@ export default function Navbar({ boards }: { boards: Board[] }) {
       </nav>
       {isOpen && (
         <>
-          <div className="fixed top-[68px] right-0 bottom-0 w-full flex flex-col justify-start bg-black/40">
-            <div className="mt-4 bg-white dark:bg-dark-grey mx-14 rounded-lg py-4">
+          <div onClick={() => setIsOpen(false)} className="fixed top-[68px] right-0 bottom-0 w-full flex flex-col justify-start bg-black/40">
+            <div onClick={e => e.stopPropagation()} className="mt-4 bg-white dark:bg-dark-grey mx-14 rounded-lg py-4">
               <h2 className="uppercase text-[12px] font-bold text-medium-grey tracking-[2.4px] px-4">
                 all boards ({boards.length})
               </h2>

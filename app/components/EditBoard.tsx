@@ -46,11 +46,6 @@ export default function EditBoard({
     setAdding(false);
   }
 
-  const getBoard = async (id: string) => {
-    const board = await db.boards.where("id").equals(id).first();
-    return board;
-  };
-
   const removeColumn = (index: number) => {
     const newColumns = [...columnsName];
     newColumns.splice(index, 1);

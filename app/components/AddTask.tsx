@@ -49,6 +49,23 @@ export default function AddTask({ title }: { title?: string }) {
         }
       }),
     });
+    const addedTask = await db.tasks.add({
+      id: randomKey(),
+      title: taskTitle,
+      boardId: board.id,
+      columnId: columnID,
+      description: taskDescription,
+      subtasks: subtasks
+        .filter((subtask) => subtask.trim().length > 0)
+        .map((subtask) => {
+          return {
+            id: randomKey(),
+            title: subtask,
+            isCompleted: false,
+          };
+        }),
+    })
+
     const bordUpdated = await db.boards.get(board.id);
     localStorage.setItem("board", JSON.stringify(bordUpdated));
     setIsOpen(false);

@@ -4,8 +4,8 @@ import { useBoard } from "../providers/BordProvider"
 import { classNames } from "../lib/functions"
 import ViewTask from "./ViewTask"
 
-export default function Column(){
-    const { board, setBoard } = useBoard()
+export default function Column({ board } : { board: Board}){
+    const { setBoard } = useBoard()
     const randomTailwind400BgColor = ["bg-cyan-400", "bg-yellow-400", "bg-green-400", "bg-blue-400", "bg-indigo-400", "bg-pink-400"]
     
     return <section className="flex overflow-x-auto min-h-dvh w-full md:pt-20 px-2" >

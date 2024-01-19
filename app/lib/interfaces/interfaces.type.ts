@@ -13,8 +13,9 @@ interface Board {
 interface Task {
     id: string;
     title: string;
+    boardId?: string;
+    columnId?: string;
     description?: string;
-    status: string;
     subtasks?: Subtask[];
   }
   

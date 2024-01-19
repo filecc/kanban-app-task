@@ -6,12 +6,13 @@ import { useBoard } from "../providers/BordProvider";
 export default function DeleteBoard() {
   const [isOpen, setIsOpen] = useState(false);
   const { board, setBoard } = useBoard();
-  console.log(board)
 
   const deleteBoard = async () => {
     try {
         await db.boards.delete(board?.id)
         localStorage.removeItem("board");
+        const tasks = await db.tasks.where("boardId").equals(board?.id).toArray()
+        await db.tasks.bulkDelete(tasks.map(task => task.id))
         setIsOpen(false);
         setBoard({} as Board)
     } catch (error) {

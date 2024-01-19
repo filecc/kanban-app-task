@@ -8,11 +8,15 @@ import Loader from "./components/Loader";
 import Sidebar from "./components/Sidebar";
 import { useState } from "react";
 import { classNames } from "./lib/functions";
+import { useBoard } from "./providers/BordProvider";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const data = useLiveQuery(() => db.boards.toArray());
+  const { board, setBoard } = useBoard();
   if (!data) return <Loader />;
+
+  
   return (
     <>
       <div className="md:hidden">
@@ -25,7 +29,7 @@ export default function Home() {
       {data && data.length > 0 ? (
        <div className={classNames(isSidebarOpen ? 'flex' : '')}>
         <div className={classNames("min-w-[260px] hidden md:block", isSidebarOpen ? '' : 'hidden')}></div>
-         <Column />
+         <Column board={board} />
        </div>
       ) : (
         <section className="flex-grow grid place-items-center">
