@@ -12,7 +12,7 @@ export default function AddTask({ title }: { title?: string }) {
   const [subtasks, setSubtasks] = useState(["", ""]);
   const placeholders = ["e.g. Drink coffee & smile", "e.g. Make coffee."];
   const [[taskTitle, taskDescription], setTask] = useState(["", ""]);
-  const [columnID, setColumnID] = useState(board.columns ? board.columns[0].id : '');
+  const [columnID, setColumnID] = useState('');
 
   const removeSubtask = (index: number) => {
     const newSubtasks = [...subtasks];
@@ -175,6 +175,7 @@ export default function AddTask({ title }: { title?: string }) {
                   setColumnID(e.target.value);
                 }}
               >
+                <option value="">Select a column</option>
                 {board.columns?.map((column) => {
                   return (
                     <option key={column.id} value={column.id}>
@@ -185,7 +186,7 @@ export default function AddTask({ title }: { title?: string }) {
               </select>
             </div>
             <button
-             
+             disabled={columnID === ''}
               onClick={handleAddTask}
               className="mt-5 buttonM button-primary w-full"
             >
