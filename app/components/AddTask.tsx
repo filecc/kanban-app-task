@@ -21,34 +21,7 @@ export default function AddTask({ title }: { title?: string }) {
   };
 
   const handleAddTask = async () => {
-    const actualBoard = await db.boards.update(board, {
-      columns: board?.columns?.map((column) => {
-        if (column.id === columnID) {
-          return {
-            ...column,
-            tasks: [
-              ...(column.tasks ?? []),
-              {
-                id: randomKey(),
-                title: taskTitle,
-                description: taskDescription,
-                subtasks: subtasks
-                  .filter((subtask) => subtask.trim().length > 0)
-                  .map((subtask) => {
-                    return {
-                      id: randomKey(),
-                      title: subtask,
-                      isCompleted: false,
-                    };
-                  }),
-              },
-            ],
-          };
-        } else {
-          return column;
-        }
-      }),
-    });
+   
     const addedTask = await db.tasks.add({
       id: randomKey(),
       title: taskTitle,
@@ -66,8 +39,19 @@ export default function AddTask({ title }: { title?: string }) {
         }),
     })
 
-    const bordUpdated = await db.boards.get(board.id);
-    localStorage.setItem("board", JSON.stringify(bordUpdated));
+    const tasks = await db.tasks.where("boardId").equals(board.id).toArray()  
+    const newBoard = {
+     ...board,
+      columns: board.columns?.map(column => {
+          return {
+              ...column,
+              tasks: tasks.filter(task => task.columnId === column.id)
+          }
+      })
+  }
+  setBoard(newBoard)
+    
+    localStorage.setItem("board", JSON.stringify(newBoard));
     setIsOpen(false);
     setSubtasks(["", ""]);
     setTask(["", ""]);

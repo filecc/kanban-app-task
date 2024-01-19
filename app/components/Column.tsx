@@ -4,10 +4,10 @@ import { useBoard } from "../providers/BordProvider"
 import { classNames } from "../lib/functions"
 import ViewTask from "./ViewTask"
 
-export default function Column({ board } : { board: Board}){
-    const { setBoard } = useBoard()
+export default function Column(){
+    const { board, setBoard } = useBoard()
     const randomTailwind400BgColor = ["bg-cyan-400", "bg-yellow-400", "bg-green-400", "bg-blue-400", "bg-indigo-400", "bg-pink-400"]
-    
+    console.log(board)
     return <section className="flex overflow-x-auto min-h-dvh w-full md:pt-20 px-2" >
         {board.columns?.map((column) => {
             return <div key={column.id} className="p-1 min-w-[300px] w-full m-2 max-w-[350px]">
@@ -17,7 +17,7 @@ export default function Column({ board } : { board: Board}){
                 <ViewTask task={task} />
             </div>
             })}
-            {!column.tasks &&
+            {(!column.tasks || column.tasks.length === 0) &&
                      <div className="mt-6 bg-white dark:bg-dark-grey rounded-lg px-4 py-6 grid place-items-center min-h-[92px]">
                     <p className="text-bodyM text-medium-grey mt-1">No tasks</p>
                 </div>

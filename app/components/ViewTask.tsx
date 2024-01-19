@@ -1,7 +1,7 @@
 "use client";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { classNames } from "../lib/functions";
 import { useBoard } from "../providers/BordProvider";
 import { db } from "../lib/db";
@@ -11,66 +11,45 @@ export default function ViewTask({ task }: { task: Task}) {
   const [subtasks, setSubtasks] = useState(task.subtasks ?? []);
   const { board, setBoard } = useBoard();
 
-  const [column, setColumn] = useState(board.columns?.find(column => column.tasks?.find(task => task.id === task.id)));
+  const updateColumn = async (e: ChangeEvent<HTMLSelectElement>) => {
+    await db.tasks.update(task, {
+        columnId: e.target.value
+    })
+    const tasks = await db.tasks.where("boardId").equals(board.id).toArray()  
+    const newBoard = {
+      name: board.name,
+      id: board.id,
+      columns: board.columns?.map(column => {
+          return {
+              ...column,
+              tasks: tasks.filter(task => task.columnId === column.id)
+          }
+      })
+  }
+  setBoard(newBoard)
+   /*  setIsOpen(false); */
+    localStorage.setItem("board", JSON.stringify(newBoard));
 
-  const updateColumn = async () => {
-    const actualBoard = await db.boards.update(board, {
-        columns: board?.columns?.map((column) => {
-            if (column.id === column.id) {
-                return {
-                    ...column,
-                    tasks: column.tasks?.map((task) => {
-                    if (task.id === task.id) {
-                        return {
-                        ...task,
-                        subtasks: subtasks.map((subtask) => {
-                            return {
-                            ...subtask,
-                            isCompleted: subtask.isCompleted,
-                            }
-                        })
-                        }
-                    } else {
-                        return task
-                    }
-                    })
-                }
-                } else {
-                    return column
-                }
-            })
-    });
-    const bordUpdated = await db.boards.get(board.id);
-    localStorage.setItem("board", JSON.stringify(bordUpdated));
-    setBoard(bordUpdated as Board);
   }
   
   const updateBoard = async () => {
-    const actualBoard = await db.boards.update(board, {
-        columns: board?.columns?.map((column) => {
-            return {
-                ...column,
-                tasks: column.tasks?.map((task) => {
-                if (task.id === task.id) {
-                    return {
-                    ...task,
-                    subtasks: subtasks.map((subtask) => {
-                        return {
-                        ...subtask,
-                        isCompleted: subtask.isCompleted,
-                        }
-                    })
-                    }
-                } else {
-                    return task
-                }
-                })
-            }
-            })
-    });
-    const bordUpdated = await db.boards.get(board.id);
-    localStorage.setItem("board", JSON.stringify(bordUpdated));
-    setBoard(bordUpdated as Board);
+    await db.tasks.update(task, {
+        subtasks: subtasks
+    })
+    const tasks = await db.tasks.where("boardId").equals(board.id).toArray()  
+    const newBoard = {
+      name: board.name,
+      id: board.id,
+      columns: board.columns?.map(column => {
+          return {
+              ...column,
+              tasks: tasks.filter(task => task.columnId === column.id)
+          }
+      })
+  }
+  setBoard(newBoard)
+   /*  setIsOpen(false); */
+    localStorage.setItem("board", JSON.stringify(newBoard));
   }
 
   return (
@@ -142,11 +121,9 @@ export default function ViewTask({ task }: { task: Task}) {
               <select
                 name="board"
                 id="board"
+                defaultValue={task.columnId}
                 className="mt-2 block w-full rounded-md border-0 py-3 pl-3 ring-1 dark:bg-dark-grey ring-inset ring-gray-300 focus:ring-2 focus:ring-purple text-headingS font-medium"
-                onChange={(e) => {
-                    setColumn(board.columns?.find(column => column.id === e.target.value))
-                    updateColumn()
-                }}
+                onChange={(e) => {updateColumn(e)}}
               >
                 {board.columns?.map((selectColumn) => {
                   return (

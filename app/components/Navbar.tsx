@@ -11,16 +11,29 @@ import { Switch } from '@headlessui/react'
 import { MoonIcon, SunIcon } from "@heroicons/react/16/solid";
 import AddTask from "./AddTask";
 import Dropdown from "./Dropdown";
+import { db } from "../lib/db";
 
 export default function Navbar({ boards }: { boards: Board[] }) {
   const { darkMode, setDarkMode } = useTheme();
   const { board, setBoard } = useBoard()
   const [isOpen, setIsOpen] = useState(false);
 
-  const selectBoard = (selectedBoard: Board) => {
-    setBoard(selectedBoard);
+  const selectBoard = async (selectedBoard: Board) => {
+   
+    const tasks = await db.tasks.where("boardId").equals(selectedBoard.id).toArray()  
+    const newBoard = {
+      name: selectedBoard.name,
+      id: selectedBoard.id,
+      columns: selectedBoard.columns?.map(column => {
+          return {
+              ...column,
+              tasks: tasks.filter(task => task.columnId === column.id)
+          }
+      })
+  }
+  setBoard(newBoard)
     setIsOpen(false);
-    localStorage.setItem("board", JSON.stringify(selectedBoard));
+    localStorage.setItem("board", JSON.stringify(newBoard));
   }
 
   return (

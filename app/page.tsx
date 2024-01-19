@@ -29,7 +29,7 @@ export default function Home() {
       {data && data.length > 0 ? (
        <div className={classNames(isSidebarOpen ? 'flex' : '')}>
         <div className={classNames("min-w-[260px] hidden md:block", isSidebarOpen ? '' : 'hidden')}></div>
-         <Column board={board} />
+         <Column  />
        </div>
       ) : (
         <section className="flex-grow grid place-items-center">

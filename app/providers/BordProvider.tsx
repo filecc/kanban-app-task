@@ -20,8 +20,13 @@ export function useBoard() {
 
 export function BoardProvider({ children }: { children: React.ReactNode }) {
     const data = useLiveQuery(() => db.boards.toArray());
-    const [localBoard, setLocalBoard] = useState();
+    const [localBoard, setLocalBoard] = useState<Board>();
     const [board, setBoard] = useState<Board | any>(localBoard ? localBoard : (data ? data[0] : {}));
+    const tasks = useLiveQuery(() => db.tasks.toArray())
+
+    console.log(tasks)
+    console.log(board)
+
     useEffect(() => {
         const localData = localStorage.getItem("board");
         if(localData){
@@ -30,10 +35,23 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
     }, [])
     
     useEffect(() => {
-        if(localBoard){
-            setBoard(localBoard)
+        
+        if(localBoard && tasks){
+            // add tasks from tasks
+            const newBoard = {
+                name: localBoard.name,
+                id: localBoard.id,
+                columns: localBoard.columns?.map(column => {
+                    return {
+                        ...column,
+                        tasks: tasks.filter(task => task.columnId === column.id)
+                    }
+                })
+            }
+            setBoard(newBoard)
+            
         }
-    }, [localBoard])
+    }, [localBoard, tasks])
 
     return (
         <BoardContext.Provider value={{ board, setBoard }}>
