@@ -10,7 +10,7 @@ import { useState } from "react";
 import { classNames } from "./lib/functions";
 
 export default function Home() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const data = useLiveQuery(() => db.boards.toArray());
   if (!data) return <Loader />;
   return (
@@ -23,8 +23,8 @@ export default function Home() {
       </div>
 
       {data && data.length > 0 ? (
-       <div className={classNames(isSidebarOpen ? 'flex pl-20' : '')}>
-        <div className={classNames("w-[260px] hidden md:block", isSidebarOpen ? '' : 'hidden')}></div>
+       <div className={classNames(isSidebarOpen ? 'flex' : '')}>
+        <div className={classNames("min-w-[260px] hidden md:block", isSidebarOpen ? '' : 'hidden')}></div>
          <Column />
        </div>
       ) : (

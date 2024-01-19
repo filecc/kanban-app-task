@@ -52,6 +52,8 @@ export default function AddTask({ title }: { title?: string }) {
     const bordUpdated = await db.boards.get(board.id);
     localStorage.setItem("board", JSON.stringify(bordUpdated));
     setIsOpen(false);
+    setSubtasks(["", ""]);
+    setTask(["", ""]);
   };
   return (
     <div>
@@ -72,8 +74,8 @@ export default function AddTask({ title }: { title?: string }) {
         {title}
       </button>
       {isOpen && (
-        <div className="fixed top-0 bottom-0 w-full right-0 bg-black/40 grid place-items-center px-6 overflow-y-scroll py-6 z-30">
-          <div className="bg-white dark:bg-dark-grey w-full p-4 rounded-lg md:max-w-[450px]">
+        <div onClick={() => setIsOpen(false)} className="fixed top-0 bottom-0 w-full right-0 bg-black/40 grid place-items-center px-6 overflow-y-scroll py-6 z-30">
+          <div onClick={e => e.stopPropagation()} className="bg-white dark:bg-dark-grey w-full p-4 rounded-lg md:max-w-[450px]">
             <h2 className="text-headingL font-bold">Add New Task</h2>
             <div className="mt-4">
               <label htmlFor="title" className="label">
@@ -187,12 +189,6 @@ export default function AddTask({ title }: { title?: string }) {
               className="mt-5 buttonM button-primary w-full"
             >
               Create Task
-            </button>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="button w-full mt-4 text-headingS"
-            >
-              Cancel
             </button>
           </div>
         </div>

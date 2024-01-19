@@ -78,8 +78,8 @@ export default function AddBoard({
       </button>
       {adding && (
         <>
-          <div className="fixed top-0 right-0 bottom-0 w-full bg-dark-grey/50 dark:bg-very-dark-grey/70 grid place-items-center px-6 text-start">
-            <div className=" bg-white dark:bg-dark-grey w-full px-6 py-6 rounded-md md:max-w-[350px]">
+          <div onClick={() => setAdding(false)} className="fixed top-0 right-0 bottom-0 w-full bg-dark-grey/50 dark:bg-very-dark-grey/70 grid place-items-center px-6 text-start">
+            <div onClick={e => e.stopPropagation()} className=" bg-white dark:bg-dark-grey w-full px-6 py-6 rounded-md md:max-w-[350px]">
               <h2 className="text-headingL font-bold">Add New Board</h2>
 
               <div className="mt-3">
