@@ -40,8 +40,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://github.com/filecc/kanban-app-task)
-- Live Site URL: [Add live site URL here](https://kanban-app-task.vercel.app/)
+- Solution URL: [Github](https://github.com/filecc/kanban-app-task)
+- Live Site URL: [Kanban Live](https://kanban-app-task.vercel.app/)
 
 ## My process
 
